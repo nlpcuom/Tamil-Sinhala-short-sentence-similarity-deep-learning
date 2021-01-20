@@ -3,7 +3,7 @@ from gensim.models import KeyedVectors
 
 # Creating the model
 ## Takes a lot of time depending on the vector file size 
-en_model = KeyedVectors.load_word2vec_format('C:\\Users\\Nilaxan\\Documents\\GitHub\\pre-trained-word-embedding-models\\fastText\\common_crawl\\crawl-300d-2M-subword.vec')
+en_model = KeyedVectors.load_word2vec_format('C:\\Users\\Nilaxan\\Documents\\GitHub\\pre-trained-word-embedding-models\\fastText\\facebook\\cc.ta.300.vec')
 
 # Getting the tokens 
 words = []
@@ -23,8 +23,11 @@ print("Vector components of a word: {}".format(
     en_model[words[0]]
 ))
 
+# Number of Tokens: 2000000
+# Dimension of a word vector: 300
+
 # Pick a word 
-find_similar_to = 'car'
+find_similar_to = 'சிங்கம்'
 
 # Finding out similar words [default= top 10]
 for similar_word in en_model.similar_by_word(find_similar_to):
@@ -33,20 +36,20 @@ for similar_word in en_model.similar_by_word(find_similar_to):
     ))
 
 # Output 
-# Word: cars, Similarity: 0.83
-# Word: automobile, Similarity: 0.72
-# Word: truck, Similarity: 0.71
-# Word: motorcar, Similarity: 0.70
-# Word: vehicle, Similarity: 0.70
-# Word: driver, Similarity: 0.69
-# Word: drivecar, Similarity: 0.69
-# Word: minivan, Similarity: 0.67
-# Word: roadster, Similarity: 0.67
-# Word: racecars, Similarity: 0.67
+# Word: சிங்கம்2, Similarity: 0.84
+# Word: சிங்கம்3, Similarity: 0.83
+# Word: சிங்கம்யா, Similarity: 0.81
+# Word: சிங்கமடா, Similarity: 0.80
+# Word: சிங்கமேவ, Similarity: 0.80
+# Word: சிங்கமென, Similarity: 0.79
+# Word: சிங்கம்ல, Similarity: 0.79
+# Word: சிங்கம்Apr, Similarity: 0.79
+# Word: சிங்கம்லே, Similarity: 0.79
+# Word: சிங்கமுலு, Similarity: 0.78
 
 # Test words 
-word_add = ['dhaka', 'india']
-word_sub = ['bangladesh']
+word_add = ['சிங்கம்', 'புலி']
+word_sub = ['குதிரை']
 
 # Word vector addition and subtraction 
 for resultant_word in en_model.most_similar(
@@ -58,13 +61,13 @@ for resultant_word in en_model.most_similar(
 
 # Output 
 
-# Word : delhi , Similarity: 0.77
-# Word : indore , Similarity: 0.76
-# Word : bangalore , Similarity: 0.75
-# Word : mumbai , Similarity: 0.75
-# Word : kolkata , Similarity: 0.75
-# Word : calcutta,india , Similarity: 0.75
-# Word : ahmedabad , Similarity: 0.75
-# Word : pune , Similarity: 0.74
-# Word : kolkata,india , Similarity: 0.74
-# Word : kolkatta , Similarity: 0.74
+# Word : சிங்கப்புலி , Similarity: 0.63
+# Word : சிங்கம்3 , Similarity: 0.62
+# Word : சிங்கம்2 , Similarity: 0.60
+# Word : சிங்கம்புலி , Similarity: 0.59
+# Word : சிங்கம்யா , Similarity: 0.58
+# Word : சிங்கமடா , Similarity: 0.58
+# Word : சிங்கம்லே , Similarity: 0.57
+# Word : புலி12 , Similarity: 0.57
+# Word : புலி11 , Similarity: 0.57
+# Word : சிங்கம்ல , Similarity: 0.57
