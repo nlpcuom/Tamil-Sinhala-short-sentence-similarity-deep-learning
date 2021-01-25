@@ -1,0 +1,67 @@
+### Project Installation Guide
+
+#### How to run
+**Tamil**
+
+ - For Training:- `python train_ta_malstm.py`
+- For Prediction: `python predict_ta_sentence.py`
+
+**Sinhala**
+- For Training: `python train_si_malstm.py`
+- For Prediction: `python predict_si_sentence.py`
+
+#### Prerequisite
+
+In order to run this project you will need to make sure that the following dependencies are installed on your system:
+  - Python 3.8.*
+  - tensorflow==2.4.0
+  - Keras==2.3.1
+  - gensim==3.8.3
+  - nltk==3.5
+  - umpy==1.19.5
+  - pandas==1.2.0
+
+Please find the other required dependencies on **requirements.txt** file
+
+#### Directory structure
+
+Here's a folder structure for the project:
+```
+Tamil-Sinhala-Short-sentence-similarity/     # Root directory.
+|- data/        # For dataset files.
+	|- tamil
+		|- train.csv
+		|- test.csv    
+	|- sinhala
+		|- train.csv
+		|- test.csv    
+|- pretrained_models/	# For pretrained word-embedding models
+|- embeddings/          
+|- utils/
+|- preprocessing/
+|- images/       		# For results output.
+|- redict_si_sentence.py
+|- predict_ta_sentence.py
+|- train_si_malstm.py
+|- train_ta_malstm.py
+|- word2vec.py
+|- README.md
+```
+
+#### Tamila & Sinhala stop-words setup
+First, install and setup `NLTK data` and download the stopped-words list files for Tamil & Sinhala languages and then place them into nltk stop-words location:
+- Windows:
+`C:\Users\<USER>\AppData\Roaming\nltk_data\corpora\stopwords`
+
+#### Pretrained word-embedding models setup
+Download & place pretrained word-embedding models into `pretrained_models` directory.
+ - [Tamil](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.ta.300.vec.gz)
+ - [Sinhala](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.si.300.vec.gz)
+ 
+ #### Datasets for training & testing
+ You should put all the dataset files to `./data` directory.
+ ```
+  |- ./data/tamil - for Tamil dataset
+  |- ./data/sinhala - for Sinhala dataset
+```
+#### References
