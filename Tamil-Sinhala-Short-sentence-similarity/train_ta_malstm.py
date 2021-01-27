@@ -43,7 +43,7 @@ train_df, embeddings = ta_fasttext_embeddings(train_df, path=path, embedding_dim
 validation_size = int(len(train_df) * 0.1)
 training_size = len(train_df) - validation_size
 
-print(max(train_df.sentence1.map(lambda x: len(x)).max(), train_df.sentence2.map(lambda x: len(x)).max()))
+##print(max(train_df.sentence1.map(lambda x: len(x)).max(), train_df.sentence2.map(lambda x: len(x)).max()))
 
 X = train_df[['sentence1_n', 'sentence2_n']]
 Y = np.where(train_df['manual_similarity'] >= 0.3, 1, 0)
