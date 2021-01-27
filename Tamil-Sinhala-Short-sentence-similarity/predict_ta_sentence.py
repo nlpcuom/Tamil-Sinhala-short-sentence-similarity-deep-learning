@@ -1,15 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import matplotlib
 import pandas as pd
+import scipy
 import tensorflow as tf
+import numpy as np
+from sklearn.metrics import mean_squared_error
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 from embeddings.fasttext.make_fasttext_embeddings import ta_fasttext_embeddings
 from utils.split_and_zero_padding import split_and_zero_padding
 from utils.distances.manhattan import ManDist
 
 # File paths
-TEST_CSV = 'data\\tamil\\test.csv'
+TEST_CSV = 'data\\tamil\\test-v1.csv'
 
 # Pretrained word embedding model
 path = "C:\\Users\\Nilaxan\\Documents\\GitHub\\pre-trained-word-embedding-models\\fastText\\facebook\\cc.ta.300.vec"
@@ -35,3 +40,30 @@ model.summary()
 
 prediction = model.predict([X_test['left'], X_test['right']])
 print(prediction)
+print('\n')
+print("===========Ture-Values===========")
+print(np.array(test_df['manual_similarity']))
+sims = np.array(test_df['manual_similarity'])
+print('\n')
+print("===========Predict-Values===========")
+print(np.round(np.array(prediction), decimals=2).flatten())
+predicted_sims = np.round(np.array(prediction), decimals=2).flatten()
+mean_squared_error = mean_squared_error(predicted_sims, sims)
+pearson_correlation = scipy.stats.pearsonr(sims, predicted_sims)[0]
+text_string = 'MSE=%.3f\nPearson Correlation=%.3f' % (mean_squared_error, pearson_correlation)
+print('\n')
+print('pearson correlation coefficient: ', pearson_correlation)
+print('mean squared error: ', mean_squared_error)
+print('\n')
+print(text_string)
+
+# Plot accuracy
+plt.plot(predicted_sims)
+plt.plot(sims)
+plt.title('Pearson correlation coefficient')
+plt.ylabel('Similarity score')
+plt.xlabel('Number of sentences')
+plt.legend(['Predicted', 'True'], loc='upper left')
+plt.text(40, 0.9, text_string)
+
+plt.savefig('images\\pearsonr-graph-tamil.png')

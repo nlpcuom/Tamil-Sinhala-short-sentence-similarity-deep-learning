@@ -6,21 +6,22 @@ import pandas as pd
 import numpy as np
 
 import matplotlib
-matplotlib.use('Agg')
 
+matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 from tensorflow.python.keras.models import Model, Sequential
-from tensorflow.python.keras.layers import Input, Embedding, LSTM, Dense
+from tensorflow.python.keras.layers import Input, Embedding, LSTM
 
 from embeddings.fasttext.make_fasttext_embeddings import ta_fasttext_embeddings
 from utils.split_and_zero_padding import split_and_zero_padding
 from utils.distances.manhattan import ManDist
 
+
 # File paths
-TRAIN_CSV = "data\\tamil\\train-v1.csv"
+TRAIN_CSV = "data\\tamil\\train.csv"
 
 # Pretrained word embedding model
 path = "C:\\Users\\Nilaxan\\Documents\\GitHub\\pre-trained-word-embedding-models\\fastText\\facebook\\cc.ta.300.vec"
@@ -35,11 +36,14 @@ embedding_dim = 300
 max_seq_length = 20
 use_fasttext = True
 
-train_df, embeddings = ta_fasttext_embeddings(train_df, path=path, embedding_dim=embedding_dim, empty_fasttext=not use_fasttext)
+train_df, embeddings = ta_fasttext_embeddings(train_df, path=path, embedding_dim=embedding_dim,
+                                              empty_fasttext=not use_fasttext)
 
 # Split to train validation
 validation_size = int(len(train_df) * 0.1)
 training_size = len(train_df) - validation_size
+
+print(max(train_df.sentence1.map(lambda x: len(x)).max(), train_df.sentence2.map(lambda x: len(x)).max()))
 
 X = train_df[['sentence1_n', 'sentence2_n']]
 Y = np.where(train_df['manual_similarity'] >= 0.3, 1, 0)
@@ -72,7 +76,7 @@ x.add(Embedding(len(embeddings), embedding_dim,
 
 # LSTM
 x.add(LSTM(n_hidden))
-#x.add(Dense(1, activation="sigmoid"))
+# x.add(Dense(1, activation="sigmoid"))
 
 shared_model = x
 
@@ -87,7 +91,8 @@ model = Model(inputs=[left_input, right_input], outputs=[malstm_distance])
 if gpus >= 2:
     # `multi_gpu_model()` is a so quite buggy. it breaks the saved model.
     model = tf.keras.utils.multi_gpu_model(model, gpus=gpus)
-model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(learning_rate), metrics=['accuracy'])
+model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(learning_rate),
+              metrics=['accuracy'])
 model.summary()
 shared_model.summary()
 
