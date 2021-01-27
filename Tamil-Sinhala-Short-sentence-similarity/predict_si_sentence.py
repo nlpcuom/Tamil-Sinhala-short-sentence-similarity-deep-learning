@@ -64,6 +64,6 @@ plt.title('Pearson correlation coefficient')
 plt.ylabel('Similarity score')
 plt.xlabel('Number of sentences')
 plt.legend(['Predicted', 'True'], loc='lower right')
-plt.text(20, 0.3, text_string)
+plt.text(20, 0.2, text_string)
 
 plt.savefig('images\\pearsonr-graph-sinhala.png')
